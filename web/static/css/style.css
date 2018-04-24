@@ -1,0 +1,106 @@
+.panel-zan > .panel-heading {
+    color: white;
+    background-color: rgba(10, 10, 0, 0.7);
+    border-color: #000;
+}
+
+.panel-zan > .panel-heading + .panel-collapse .panel-body {
+    border-top-color: #000;
+}
+
+.panel .post-title {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 75%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.login-form {
+    padding: 30px 20px;
+}
+
+.login-form .input-group-addon {
+    background-color: #d9534f;
+    color: white;
+    border: 2px solid #d9534f;
+}
+
+.login-form .input-group-addon i {
+    width: 15px;
+}
+
+.login-form .form-control {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    padding: 10px 5px;
+    border-left: none;
+}
+
+.login-form .btn {
+    padding: 10px;
+    margin-top: 30px;
+}
+
+.login-form img {
+    border: 3px solid #d9534f;
+    border-radius: 50%;
+    padding: 3px;
+}
+
+.login-panel {
+    height: 100px;
+    padding: 20px 0;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .login-panel {
+        padding: 20px 0;
+    }
+}
+
+.login-panel img {
+    margin-right: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: white;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+
+.login-panel img:hover {
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+.login-panel a:hover {
+    color: #d9534f;
+}
+
+.login-panel .user-name {
+    margin-right: 20px;
+}
+
+#zan-header.navbar {
+    border-radius: 0;
+    font-size: 14px;
+}
+
+.login_container {
+    margin: 0 auto;
+    width: 50%;
+}
+aside#zan_login-5 {
+    box-shadow: 2px 2px 1px 0 #ccc;
+    margin-top: 80px;
+}
