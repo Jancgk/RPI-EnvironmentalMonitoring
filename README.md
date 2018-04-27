@@ -21,6 +21,11 @@ module.exports = {
     }
 }
 ```
+#### set admin_table password
+```
+cd web/lib/
+npm run logmd5.js
+```
 
 #### run node server
 ```
@@ -29,3 +34,5 @@ cd web
 npm install
 npm run index.js
 ```
+
+![test](https://raw.githubusercontent.com/Jancgk/RPI-EnvironmentalMonitoring/master/value.png)

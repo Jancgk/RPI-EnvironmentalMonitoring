@@ -1,12 +1,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>RPI-EnvironmentalMonitoring</title>
     <link rel="icon" type="image/png" href="/files/img/favicon.ico">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
     <style>
+        th {
+            text-align: center;
+        }
+        tr {
+            text-align: center;
+        }
         .view {
             margin-top: 20px;
             margin-bottom: 20px;
@@ -24,60 +31,49 @@
         <h3 style="text-align: center">This is the dynamic diagram</h3>
         <div class="col-md-12">
             <div id="dynamic" style="min-width:400px;height:400px"></div>
-            <div>
+            <h3 style="text-align: center">Setting value</h3>
+                <form class="login-form clearfix" action="/admin/setting" method="post">
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                        <tr>
+                            <th>dht11_refreshtime</th>
+                            <th>gy30_refreshtime</th>
+                            <th>hcsr04_refreshtime</th>
+                            <th>sys_monitor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <% for (let i =0;i<settingData.length;i++) {%>
+                                <td><%- settingData[i].dht11_refreshtime %></td>
+                                <td><%- settingData[i].gy30_refreshtime %></td>
+                                <td><%- settingData[i].hcsr04_refreshtime %></td>
+                                <td><%- settingData[i].sys_monitor %></td>
+                                <% } %>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="dht11_refreshtime" id="dht11_refreshtime"  placeholder="dht11_refreshtime"></td>
+                                <td><input type="text" name="gy30_refreshtime" id="gy30_refreshtime" placeholder="gy30_refreshtime"></td>
+                                <td><input type="text" name="hcsr04_refreshtime" id="hcsr04_refreshtime" placeholder="hcsr04_refreshtime"></td>
+                                <td><input type="text" name="sys_monitor" id="sys_monitor" placeholder="sys_monitor"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-success btn-block" type="submit" name="submit" onclick="return confirm('Save setting?')">save</button>
+                </form>
                 <div class="view">
-                    <a href="http://localhost:8080/admin/act=reset" class="btn btn-danger btn-block" onclick="return confirm('Are you sure reset the table?')">Reset Table</a>
+                    <a href="http://localhost:8080/admin/act=reset" class="btn btn-danger btn-block"
+                       onclick="return confirm('Reset the table?')">Reset Table</a>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-12">
-            <h3 style="text-align: center">This is data</h3>
-            <table class="table table-condensed table-bordered">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Time</th>
-                    <th>Humidity</th>
-                    <th>temperature</th>
-                    <th>light</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% for (var i = 0;i < myData.length;i++) { %>
-
-                <% if(i % 2 == 0) { %>
-
-                <tr class="success">
-                    <td><%- myData[i].ID %></td>
-                    <td><%- myData[i].time %></td>
-                    <td><%- myData[i].humidity %></td>
-                    <td><%- myData[i].temperature %></td>
-                    <td><%- myData[i].light %></td>
-                </tr>
-                <% } else { %>
-                <tr>
-                    <td><%- myData[i].ID %></td>
-                    <td><%- myData[i].time %></td>
-                    <td><%- myData[i].humidity %></td>
-                    <td><%- myData[i].temperature %></td>
-                    <td><%- myData[i].light %></td>
-                </tr>
-
-                <% } %>
-
-                <% } %>
-
-                </tbody>
-            </table>
-        </div>
     </div>
-</div>
 <script>
     $(function () {
         var seriesOptions = [],
             seriesCounter = 0,
-            names = ['humidity','temperature','light'],
+            // names = ['humidity','temperature','light'],
+            names = ['humidity', 'temperature'],
             // create the chart when all data is loaded
             createChart = function () {
                 $('#dynamic').highcharts('StockChart', {
@@ -109,7 +105,7 @@
                 });
             };
         $.each(names, function (i, name) {
-            $.getJSON('http://localhost:8080/json/' + name.toLowerCase(),function (data) {
+            $.getJSON('http://localhost:8080/json/' + name.toLowerCase(), function (data) {
                 seriesOptions[i] = {
                     name: name,
                     data: data

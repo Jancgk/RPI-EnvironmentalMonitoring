@@ -1,0 +1,40 @@
+<div class="col-md-12">
+    <h3 style="text-align: center">This is data</h3>
+    <table class="table table-condensed table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Time</th>
+            <th>Humidity</th>
+            <th>temperature</th>
+            <th>light</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (var i = 0;i < myData.length;i++) { %>
+
+        <% if(i % 2 == 0) { %>
+
+        <tr class="success">
+            <td><%- myData[i].ID %></td>
+            <td><%- myData[i].time %></td>
+            <td><%- myData[i].humidity %></td>
+            <td><%- myData[i].temperature %></td>
+            <td><%- myData[i].light %></td>
+        </tr>
+        <% } else { %>
+        <tr>
+            <td><%- myData[i].ID %></td>
+            <td><%- myData[i].time %></td>
+            <td><%- myData[i].humidity %></td>
+            <td><%- myData[i].temperature %></td>
+            <td><%- myData[i].light %></td>
+        </tr>
+
+        <% } %>
+
+        <% } %>
+
+        </tbody>
+    </table>
+</div>

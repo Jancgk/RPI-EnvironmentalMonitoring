@@ -82,7 +82,7 @@ let util = {
 
 // json
 server.get('/json/humidity', (req, res) => {
-    db.query("SELECT time,humidity FROM `test`;", (err, data) => {
+    db.query("SELECT timestamp,humidity FROM `sensor_dht11`;", (err, data) => {
         if (err) {
             console.log(err);
             res.status(500).send('database error').end();
@@ -94,7 +94,7 @@ server.get('/json/humidity', (req, res) => {
 });
 
 server.get('/json/temperature', (req, res) => {
-    db.query("SELECT time,temperature FROM `test`;", (err, data) => {
+    db.query("SELECT timestamp,temperature FROM `sensor_dht11`;", (err, data) => {
         if (err) {
             console.log(err);
             res.status(500).send('database error').end();
@@ -106,7 +106,7 @@ server.get('/json/temperature', (req, res) => {
 });
 
 server.get('/json/light', (req, res) => {
-    db.query("SELECT time,light FROM `test`;", (err, data) => {
+    db.query("SELECT timestamp,light FROM `sensor_gy30`;", (err, data) => {
         if (err) {
             console.log(err);
             res.status(500).send('database error').end();

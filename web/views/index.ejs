@@ -11,6 +11,11 @@
     <script src="/files/js/hcharts/exporting.js"></script>
     <script src="/files/js/hcharts/export-data.js"></script>
     <script src="/files/js/hcharts/dark-unica.js"></script>
+    <style>
+        th {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -66,7 +71,7 @@
     $(function () {
         var seriesOptions = [],
             seriesCounter = 0,
-            names = ['humidity','temperature','light'],
+            names = ['humidity','temperature'],
             // create the chart when all data is loaded
             createChart = function () {
                 $('#dynamic').highcharts('StockChart', {
