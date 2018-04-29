@@ -6,11 +6,12 @@ Test
 
 
 #### config
-```
+```js
 module.exports = {
     port:"8080",
+    url:'http://localhost:8080/',// or like: http:www.example.com:8080
     session: {
-        maxAge: 20 * 60 * 1000  // session for 20 min
+        maxAge: 20 * 60 * 1000// session for 20 min
     },
     db:{
         host: 'localhost',
@@ -24,7 +25,13 @@ module.exports = {
 #### set admin_table password
 ```
 cd web/lib/
-npm run logmd5.js
+npm ./logmd5.js
+```
+
+default
+```
+username:admin
+password:111111
 ```
 
 #### run node server
@@ -32,7 +39,7 @@ npm run logmd5.js
 git clone
 cd web
 npm install
-npm run index.js
+npm ./index.js
 ```
 
 ![test](https://raw.githubusercontent.com/Jancgk/RPI-EnvironmentalMonitoring/master/value.png)

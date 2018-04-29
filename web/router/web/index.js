@@ -1,13 +1,14 @@
 const express = require('express');
 const mysql = require('mysql');
+const config = require('config-lite')(__dirname);
 
-
-var db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '111111',
-    database: 'rpi-environmentalmonitoring',
-    port:'3307'
+const db = mysql.createPool({
+    host: config.db.host,
+    url:config.url,
+    user: config.db.user,
+    password: config.db.password,
+    database: config.db.database,
+    port: config.db.port
 });
 
 module.exports = function () {
@@ -26,7 +27,7 @@ module.exports = function () {
                 console.log(err)
                 res.status(500).send('database error').end();
             } else {
-                res.render('index.ejs', {myData:data});
+                res.render('index.ejs', {myData:data,getJsonPath:config.url});
             }
         });
     });

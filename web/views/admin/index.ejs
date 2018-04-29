@@ -11,9 +11,11 @@
         th {
             text-align: center;
         }
+
         tr {
             text-align: center;
         }
+
         .view {
             margin-top: 20px;
             margin-bottom: 20px;
@@ -28,46 +30,58 @@
 <body>
 <div class="container">
     <div class="row">
-        <h3 style="text-align: center">This is the dynamic diagram</h3>
         <div class="col-md-12">
+            <h3 style="text-align: center">Dynamic Diagram</h3>
             <div id="dynamic" style="min-width:400px;height:400px"></div>
+        </div>
+        <div class="col-md-12">
+            <h3 style="text-align: center">Dynamic light</h3>
+            <div id="dynamic-light" style="min-width:400px;height:400px"></div>
+        </div>
+        <div class="col-md-12">
             <h3 style="text-align: center">Setting value</h3>
-                <form class="login-form clearfix" action="/admin/setting" method="post">
-                    <table class="table table-condensed table-bordered">
-                        <thead>
-                        <tr>
-                            <th>dht11_refreshtime</th>
-                            <th>gy30_refreshtime</th>
-                            <th>hcsr04_refreshtime</th>
-                            <th>sys_monitor</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <% for (let i =0;i<settingData.length;i++) {%>
-                                <td><%- settingData[i].dht11_refreshtime %></td>
-                                <td><%- settingData[i].gy30_refreshtime %></td>
-                                <td><%- settingData[i].hcsr04_refreshtime %></td>
-                                <td><%- settingData[i].sys_monitor %></td>
-                                <% } %>
-                            </tr>
-                            <tr>
-                                <td><input type="text" name="dht11_refreshtime" id="dht11_refreshtime"  placeholder="dht11_refreshtime"></td>
-                                <td><input type="text" name="gy30_refreshtime" id="gy30_refreshtime" placeholder="gy30_refreshtime"></td>
-                                <td><input type="text" name="hcsr04_refreshtime" id="hcsr04_refreshtime" placeholder="hcsr04_refreshtime"></td>
-                                <td><input type="text" name="sys_monitor" id="sys_monitor" placeholder="sys_monitor"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn btn-success btn-block" type="submit" name="submit" onclick="return confirm('Save setting?')">save</button>
-                </form>
-                <div class="view">
-                    <a href="http://localhost:8080/admin/act=reset" class="btn btn-danger btn-block"
-                       onclick="return confirm('Reset the table?')">Reset Table</a>
-                </div>
+            <form class="login-form clearfix" action="/admin/setting" method="post">
+                <table class="table table-condensed table-bordered">
+                    <thead>
+                    <tr>
+                        <th>dht11_refreshtime</th>
+                        <th>gy30_refreshtime</th>
+                        <th>hcsr04_refreshtime</th>
+                        <th>sys_monitor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <% for (let i = 0;i < settingData.length;i++) { %>
+                        <td><%- settingData[i].dht11_refreshtime %></td>
+                        <td><%- settingData[i].gy30_refreshtime %></td>
+                        <td><%- settingData[i].hcsr04_refreshtime %></td>
+                        <td><%- settingData[i].sys_monitor %></td>
+                        <% } %>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="dht11_refreshtime" id="dht11_refreshtime"
+                                   placeholder="dht11_refreshtime"></td>
+                        <td><input type="text" name="gy30_refreshtime" id="gy30_refreshtime"
+                                   placeholder="gy30_refreshtime">
+                        </td>
+                        <td><input type="text" name="hcsr04_refreshtime" id="hcsr04_refreshtime"
+                                   placeholder="hcsr04_refreshtime"></td>
+                        <td><input type="text" name="sys_monitor" id="sys_monitor" placeholder="sys_monitor"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-success btn-block" type="submit" name="submit"
+                        onclick="return confirm('Save setting?')">Save
+                </button>
+            </form>
+            <div class="view">
+                <a href="http://localhost:8080/admin/act=reset" class="btn btn-danger btn-block"
+                   onclick="return confirm('Reset the table?')">Reset Table</a>
             </div>
         </div>
     </div>
+</div>
 <script>
     $(function () {
         var seriesOptions = [],
@@ -112,6 +126,54 @@
                 };
                 // As we're loading the data asynchronously, we don't know what order it will arrive. So
                 // we keep a counter and create the chart when all the data is loaded.
+                seriesCounter += 1;
+                if (seriesCounter === names.length) {
+                    createChart();
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(function () {
+        var seriesOptions = [],
+            seriesCounter = 0,
+            names = ['light'],
+            createChart = function () {
+                $('#dynamic-light').highcharts('StockChart', {
+                    rangeSelector: {
+                        selected: 4
+                    },
+                    yAxis: {
+                        labels: {
+                            formatter: function () {
+                                return (this.value > 0 ? ' + ' : '') + this.value + '%';
+                            }
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 2,
+                            color: 'silver'
+                        }]
+                    },
+                    plotOptions: {
+                        series: {
+                            compare: 'percent'
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+                        valueDecimals: 2
+                    },
+                    series: seriesOptions
+                });
+            };
+        $.each(names, function (i, name) {
+            $.getJSON('<% getJsonPath[0] %>/json/' + name.toLowerCase(), function (data) {
+                seriesOptions[i] = {
+                    name: name,
+                    data: data
+                };
                 seriesCounter += 1;
                 if (seriesCounter === names.length) {
                     createChart();

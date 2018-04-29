@@ -2,7 +2,6 @@ const express = require('express');
 const mysql = require('mysql');
 const config = require('config-lite')(__dirname);
 
-
 const db = mysql.createPool({
     host: config.db.host,
     user: config.db.user,
@@ -19,7 +18,7 @@ module.exports = function () {
                 console.log(err)
                 res.status(500).send('database error').end();
             } else {
-                res.render('admin/index.ejs', {settingData:data});
+                res.render('admin/index.ejs', {settingData:data,getJsonPath:config.url});
             }
         });
     });
